@@ -230,7 +230,12 @@ def criar_viagem():
             clima = obter_clima(client, lat_d, lon_d)
             percurso = obter_percurso(client, lat_o, lon_o, lat_d, lon_d)
         destino_formatado = f"{destino} - {uf_d_real or uf_destino}"
-        guia, diagnostico_ia = obter_guia_destino_com_diagnostico(destino_formatado)
+        guia, diagnostico_ia = obter_guia_destino_com_diagnostico(
+            destino_formatado,
+            origem=f"{origem} - {uf_o_real or uf_origem}",
+            clima=clima,
+            percurso=percurso,
+        )
         status_servicos = {
             "geocoding": "sucesso" if (lat_o, lon_o) != (0.0, 0.0) and (lat_d, lon_d) != (0.0, 0.0) else "fallback",
             "clima": "sucesso" if all(valor != "N/D" for valor in clima.values()) else "fallback",
